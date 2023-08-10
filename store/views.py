@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from .models import Category, Product, Slider
+from .models import Cart, Category, Product, Slider
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.utils.translation import gettext as _
 
 # Create your views here.
 
@@ -59,6 +61,49 @@ def cart(request):
     return render(
         request, 'cart.html'
     )
+
+
+def cart_update(request, pid):
+    if not request.session.session_key:
+        request.session.create()
+    session_id = request.session.session_key
+    cart_model = Cart.objects.filter(session=session_id).last()
+
+    if cart_model is None:
+        cart_model = Cart.objects.create(session_id=session_id, items=[pid])
+    elif pid not in cart_model.items:
+        cart_model.items.append(pid)
+        cart_model.save()
+
+
+    return JsonResponse({
+        'message': _('The product has been added you your cart.'),
+        'items_count': len(cart_model.items)
+    })  
+
+
+
+def cart_remove(request, pid):
+    session_id = request.session.session_key
+
+    if not session_id:
+        return JsonResponse({})
+
+    cart_model = Cart.objects.filter(session=session_id).last()
+
+    if cart_model is None:
+        return JsonResponse({})
+    
+    elif pid in cart_model.items:
+        cart_model.items.remove(pid)
+        cart_model.save()
+
+
+    return JsonResponse({
+        'message': _('The product has been removed from you your cart.'),
+        'items_count': len(cart_model.items)
+    })  
+
 
 
 def checkout(request):
