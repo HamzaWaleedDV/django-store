@@ -131,3 +131,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '6629928864d683'
+EMAIL_HOST_PASSWORD = '2307128c8180f2'
+EMAIL_PORT = '2525'
+
+SITE_URL = 'http://127.0.0.1:8000/'
