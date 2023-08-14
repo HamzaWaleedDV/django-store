@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.sessions.models import Session
+from checkout.models import Transaction
 
 from django_store import settings
 
@@ -49,14 +50,9 @@ class Product(models.Model):
     
 
 class Order(models.Model):
-    customer = models.JSONField(default=dict)
-    total = models.FloatField()
+    transaction = models.OneToOneField(Transaction, on_delete=models.PROTECT, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)    
-
-    @property
-    def customer_name(self):
-        return self.customer['first_name'] + ' ' + self.customer['last_name']
 
     def __str__(self):
         return self.id
