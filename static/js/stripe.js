@@ -3,7 +3,7 @@ const stripeSubmit = document.getElementById('stripe-submit');
 
 async function createStripeSession() {
 
-  switchPaymentMethod('stripe', '')
+  // switchPaymentMethod('stripe', '')
 
   const form = document.getElementById('form-user-info');
   const formData = new FormData(form);
@@ -26,7 +26,7 @@ async function createStripeSession() {
     stripeSubmit.disabled = false;
   } catch (e) {
     console.log(e)
-    notyf.error(e.response.data.message);
+    notyf.error(e.response.body.message);
   }
 }
 

@@ -113,6 +113,7 @@ def checkout(request):
 
 
 def checkout_complete(request):
+    cart_model = Cart.objects.filter(session=request.session.session_key).delete()
     return render(
         request, 'checkout-complete.html'
     )

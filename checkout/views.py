@@ -6,8 +6,6 @@ from .forms import UserInfoForm
 from store.models import Product, Cart, Order
 from .models import Transaction, PaymentMethod
 from django.shortcuts import redirect
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 import stripe
 
@@ -27,12 +25,12 @@ def stripe_transaction(request):
         }, status=400)
     stripe.api_key = settings.STRIPE_SECRET_KEY
     intent = stripe.PaymentIntent.create(
-        amount=transaction.amount * 100,
-        currency=settings.CURRENCY,
-        payment_method_types=['card'],
-        metadata={
+    amount=transaction.amount * 100,
+    currency=settings.CURRENCY,
+    payment_method_types=['card'],
+    metadata={
         'transaction': transaction.id
-        }
+    }
     )
     return JsonResponse({
         'client_secret': intent['client_secret']
@@ -69,16 +67,3 @@ def make_transaction(request, pm):
         return redirect('store.checkout')
 
 
-def send_order_email(order, products):
-    msg_html = render_to_string('emails/order.html', {
-        'order': order,
-        'products': products,
-    })
-    
-    send_mail(
-        subject='New Order',
-        html_message=msg_html,
-        message=msg_html,
-        from_email='noreply@example.com',
-        recipient_list=[order.customer['email']]
-    )

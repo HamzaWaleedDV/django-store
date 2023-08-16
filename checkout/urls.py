@@ -1,9 +1,10 @@
 from django.urls import path
-from checkout import views
+from checkout import views, webhooks
 
 
 urlpatterns = [
-    path('stripe/config', views.stripe_config, name='checkout.strip_config'),
-    path('stripe', views.stripe_transaction, name='checkout.strip'),
-    path('paypal', views.paypal_trasaction, name='checkout.paypal')
+    path('stripe', views.stripe_transaction, name='checkout.stripe'),
+    path('stripe/webhook', webhooks.stripe_webhook),
+    path('stripe/config', views.stripe_config, name='checkout.stripe.config'),
+    path('paypal', views.paypal_trasaction, name='checkout.paypal'),
 ]
