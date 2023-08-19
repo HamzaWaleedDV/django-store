@@ -1,6 +1,8 @@
 import math
+
+from django.urls import reverse
 from django_store import settings
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .forms import UserInfoForm
 from store.models import Product, Cart, Order
@@ -8,6 +10,7 @@ from .models import Transaction, PaymentMethod
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 import stripe
+from paypal.standard.forms import PayPalPaymentsForm
 
 
 # Create your views here.
@@ -36,9 +39,24 @@ def stripe_transaction(request):
         'client_secret': intent['client_secret']
     })
 
+
 def paypal_trasaction(request):
     transaction = make_transaction(request, PaymentMethod.Paypal)
+    if not transaction:
+        return JsonResponse({
+            'message': _('Please enter valid information.')
+        }, status=400)
 
+    form = PayPalPaymentsForm(initial={
+        'business': settings.PAYPAL_EMAIL,
+        'amount': transaction.amount,
+        'invoice': transaction.id,
+        'currency_code': settings.CURRENCY,
+        'return_url': f'http://{request.get_host()}/{reverse("store.checkout_complete")}',
+        'cancel_url': f'http://{request.get_host()}/{reverse("store.checkout")}',
+    })
+
+    return HttpResponse(form.render())
 
 def make_transaction(request, pm):
     form = UserInfoForm(request.POST)

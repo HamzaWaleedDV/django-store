@@ -3,11 +3,12 @@ const stripeSubmit = document.getElementById('stripe-submit');
 
 async function createStripeSession() {
 
-  // switchPaymentMethod('stripe', '')
-
+  
   const form = document.getElementById('form-user-info');
   const formData = new FormData(form);
-
+  
+  switchPaymentMethod('stripe', '')
+  
   stripeSubmit.disabled = true;
   try {
     const { data } = await axios.post("/checkout/stripe", formData)

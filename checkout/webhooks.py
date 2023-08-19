@@ -44,7 +44,7 @@ def make_order(transaction_id):
     products = Product.objects.filter(pk__in=transaction.items)
 
     for product in products:
-        order.orderproduct_ste.create(product_id=product.id, price=product.price)
+        order.orderproduct_set.create(product_id=product.id, price=product.price)
 
 
 

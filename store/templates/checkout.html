@@ -67,9 +67,11 @@
                 <h4 class="my-3"> {% trans 'Payment Method' %} </h4>
                 <div class="row">
                     <div class="col-md-6">
-                        <div id="pm-paypal" class="card" role="button">
+                        <div class="card" role="button" onclick="createPaypalSession()">
                             <div class="card-body text-center">
-                                <p> {% trans 'Paypal' %} </p>
+                                <p>
+                                    {% trans 'Paypal' %}
+                                </p>
                                 <i class="lni lni-paypal-original fs-1"></i>
                             </div>
                         </div>
@@ -84,16 +86,17 @@
                     </div>
                     <div class="col-md-12">
                         <div id="payment-form-container">
-                          <div id="stripe-card" class="card my-3 p-3" style="display: none">
-                            <form id="payment-form">
-                              <div id="payment-element">
-                              </div>
-                              <button id="stripe-submit" class="btn btn-primary mt-3">
-                                {% trans 'pay now' %}
-                              </button>
-                      
-                            </form>
-                          </div>
+                            <div id="stripe-card" class="card my-3 p-3" style="display: none">
+                                <form id="payment-form">
+                                    <div id="payment-element">
+                                    </div>
+                                    <button id="stripe-submit" class="btn btn-primary mt-3">
+                                        {% trans 'Pay Now' %}
+                                    </button>
+                                </form>
+                            </div>
+                            <div id="paypal-card" class="card my-3 p-3" style="display: none">
+                            </div>
                         </div>
                         <div id="paypal-card" class="card my-3 p-3" style="display: none">
                         </div>
