@@ -1,23 +1,50 @@
+from typing import Optional
 from django.contrib import admin
+from django.http.request import HttpRequest
 from . import models
 
 
 @admin.register(models.Category)
-class CategoryModel(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
 @admin.register(models.Author)
-class AuthorModel(admin.ModelAdmin):
+class AuthorAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
 @admin.register(models.Product)
-class ProductModel(admin.ModelAdmin):
+class ProductAdmin(admin.ModelAdmin):
     list_per_page = 20    
 
 
 
 @admin.register(models.Slider)
-class SliderModel(admin.ModelAdmin):
+class SliderAdmin(admin.ModelAdmin):
     list_per_page = 20
+
+
+@admin.register(models.Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'email', 'amount', 'payment_method', 'items', 'created_at']
+    list_per_page = 20
+    list_select_related = ['transaction']
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request):
+        return False
+
+    def amount(self, obj):
+        return obj.transaction.amount
+
+    def items(self, obj):
+        return len(obj.transaction.items)
+
+    def email(self, obj):
+        return obj.transaction.customer_email
+
+    def payment_method(self, obj):
+        return obj.transaction.get_payment_method_display()
