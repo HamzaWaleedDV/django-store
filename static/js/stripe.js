@@ -3,12 +3,11 @@ const stripeSubmit = document.getElementById('stripe-submit');
 
 async function createStripeSession() {
 
-  
+  switchPaymentMethod('stripe', '')
+
   const form = document.getElementById('form-user-info');
   const formData = new FormData(form);
-  
-  switchPaymentMethod('stripe', '')
-  
+
   stripeSubmit.disabled = true;
   try {
     const { data } = await axios.post("/checkout/stripe", formData)
@@ -27,7 +26,7 @@ async function createStripeSession() {
     stripeSubmit.disabled = false;
   } catch (e) {
     console.log(e)
-    notyf.error(e.response.body.message);
+    notyf.error(e.response.data.message);
   }
 }
 
