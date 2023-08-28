@@ -86,10 +86,10 @@ WSGI_APPLICATION = 'django_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_pm_lv0k',
-        'USER': 'django_pm_lv0k_user',
-        'PASSWORD': 'DIGQYTxk1UFT2K3snZc4FM8F3xPtjHkc',
-        'HOST': 'dpg-cj0mdhs07spl5oqdek4g-a',
+        'NAME': 'book_store_y5z2',
+        'USER': 'book_store_y5z2_user',
+        'PASSWORD': 'lmCIoTt3VhmqNWR9h49lrM0J4huv65Un',
+        'HOST': 'dpg-cjm7vslk5scs73di4sc0-a',
         'PORT': '5432',
     }
 }
