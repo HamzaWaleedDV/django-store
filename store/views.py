@@ -3,6 +3,8 @@ from .models import Cart, Category, Product, Slider
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils.translation import gettext as _
+from django.core.mail import send_mail
+from django_store import settings
 
 # Create your views here.
 

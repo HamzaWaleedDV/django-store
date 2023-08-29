@@ -77,6 +77,13 @@ def make_order(transaction_id):
         subject='New Order',
         html_message=msg_html,
         message=msg_html,
-        from_email='noreply@example.com',
+        from_email=settings.EMAIL_HOST_USER,
         recipient_list=[order.transaction.customer_email]
     )
+
+    send_mail(
+        'Hello',
+        'This is email sended via django',
+        settings.EMAIL_HOST_USER,
+        ['hamzawaleed.grant@gmail.com'],
+        False)
