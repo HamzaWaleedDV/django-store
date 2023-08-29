@@ -95,8 +95,8 @@ DATABASES = {
 }
 
 
-# database_url = os.environ.get('DATABASE_URL')
-DATABASES['default'] = dj_database_url.parse('postgres://book_store_pkba_user:fbpeJj1WvPjF0AUyr4WnvXnNhoHMltxn@dpg-cjm8khdk5scs73dp09p0-a.oregon-postgres.render.com/book_store_pkba')
+database_url = os.environ.get('DATABASE_URL')
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 
 # Password validation
@@ -143,13 +143,6 @@ MEDIA_ROOT = BASE_DIR / 'static/media/'  # نقوم بالتعديل عليه ل
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 465
-# EMAIL_USE_SSL = True
-# EMAIL_HOST_USER = 'learncodeeasily.contact@gmail.com'
-# EMAIL_HOST_PASSWORD = 'mvjtzrhrdinwyrwb'
 
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = '6629928864d683'
